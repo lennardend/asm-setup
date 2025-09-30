@@ -3,9 +3,15 @@ import os
 import subprocess
 import re
 
+def run_make(exe_name: str):
+    if not (exe_name.startswith("./") or exe_name.startswith("/")):
+        exe_name = f"./{exe_name}"
+    print(f"starting make.sh with argument {exe_name}")
+    subprocess.run(["/scripts/make.sh", exe_name])
+
 arguments = sys.argv
 if len(arguments) > 1:
-    subprocess.run(["/scripts/make.sh", arguments[1]])
+    run_make(arguments[1])
     exit(0)
 
 print("trying to get executable name from makefile")
@@ -36,4 +42,4 @@ with open(makefile) as file:
         exit(1)
     
     print(f"found {groups[0]}")
-    subprocess.run(["/scripts/make.sh", f"./{groups[0]}"])
+    run_make(groups[0])
