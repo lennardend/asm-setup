@@ -1,0 +1,2 @@
+tui e
+layout regs

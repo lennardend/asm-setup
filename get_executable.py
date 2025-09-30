@@ -3,15 +3,29 @@ import os
 import subprocess
 import re
 
-def run_make(exe_name: str):
-    if not (exe_name.startswith("./") or exe_name.startswith("/")):
+def run_make(exe_name: str, debug: bool):
+    if debug:
+        exe_name = f"gdb --tui {exe_name}"
+    elif not (exe_name.startswith("./") or exe_name.startswith("/")):
         exe_name = f"./{exe_name}"
+    
     print(f"starting make.sh with argument {exe_name}")
     subprocess.run(["/scripts/make.sh", exe_name])
 
+
+debug = False
+exe_name = ""
+
 arguments = sys.argv
-if len(arguments) > 1:
-    run_make(arguments[1])
+for i in range(1, len(arguments)):
+    argument = arguments[i]
+    if argument == "--debug":
+        debug = True
+    else:
+        exe_name = argument
+
+if exe_name != "":
+    run_make(exe_name, debug)
     exit(0)
 
 print("trying to get executable name from makefile")
@@ -42,4 +56,4 @@ with open(makefile) as file:
         exit(1)
     
     print(f"found {groups[0]}")
-    run_make(groups[0])
+    run_make(groups[0], debug)

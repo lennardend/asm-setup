@@ -18,5 +18,25 @@
             ]
         },
         "when": "editorFocus && (editorLangId == 'makefile' || editorLangId == 'asm-intel-x86-generic')"
+    },
+    {
+        "key": "cmd+shift+r",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "workbench.action.terminal.toggleTerminal",
+                    "when": "!terminal.active"
+                },
+                "workbench.action.terminal.clear",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "docker run --rm -ti --platform linux/amd64 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(pwd):/code:ro local/asm --debug\u000D"
+                    }
+                }
+            ]
+        },
+        "when": "editorFocus && (editorLangId == 'makefile' || editorLangId == 'asm-intel-x86-generic')"
     }
 ]
