@@ -10,8 +10,12 @@ def run_make(exe_name: str, debug: bool):
         exe_name = f"./{exe_name}"
     
     print(f"starting make.sh with argument {exe_name}")
-    subprocess.run(["/scripts/make.sh", exe_name])
-
+    try:
+        subprocess.run(["/scripts/make.sh", exe_name])
+    except KeyboardInterrupt:
+        print("cancelled by user")
+    except Exception as ex:
+        raise ex
 
 debug = False
 exe_name = ""
