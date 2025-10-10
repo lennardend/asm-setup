@@ -3,7 +3,7 @@ FROM alpine:latest
 # update package manager
 RUN apk update && apk upgrade
 # install required packages
-RUN apk add python3 nasm make binutils gdb
+RUN apk add --no-cache python3 nasm make binutils gdb xdd
 
 # setup for make
 WORKDIR /code

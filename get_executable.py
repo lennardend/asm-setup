@@ -23,6 +23,10 @@ exe_name = ""
 arguments = sys.argv
 for i in range(1, len(arguments)):
     argument = arguments[i]
+    if argument == "--shell":
+        debug = False
+        exe_name = "/bin/sh"
+        break
     if argument == "--debug":
         debug = True
     else:

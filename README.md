@@ -25,6 +25,8 @@ After a executable name is found (or given), [make.sh](make.sh) is run with the 
 
 To start a [`gdb`](https://www.sourceware.org/gdb/) session, include the `--debug` flag in your `docker run` command.
 
+To go into the shell of the container, use `/bin/sh` as argument or add the `--shell` flag in your `docker run` command.
+
 ### Debugger
 
 If you want to use the debugger, make sure to use [colima](https://github.com/abiosoft/colima) as your container runtime. Colima runs Docker inside a emulated linux VM. The Docker ARM runtime corrently has an issue where they cannot correctly access the memory, which means `gdb` cannot access the register values (see this [GitHub issue](https://github.com/docker/for-mac/issues/6921)).
