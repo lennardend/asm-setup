@@ -9,6 +9,7 @@ RUN apk add --no-cache python3 nasm make binutils gdb xxd
 WORKDIR /code
 WORKDIR /compile
 
+COPY .gdbearlyinit /root/.gdbearlyinit
 COPY .gdbinit /root/.gdbinit
 COPY get_executable.py /scripts/get_executable.py
 COPY make.sh /scripts/make.sh
