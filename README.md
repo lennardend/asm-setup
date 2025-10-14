@@ -9,12 +9,12 @@ docker build --platform linux/amd64 -t "local/asm" .
 
 To build and execute your current project, run:
 ```sh
-docker run --rm -ti --platform linux/amd64 -v $(pwd):/code:ro local/asm
+docker run --rm -ti --platform linux/amd64 -v "$(pwd)":/code:ro local/asm
 ```
 
 To build and start the gdb debugger, run:
 ```sh
-docker run --rm -ti --platform linux/amd64 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(pwd):/code:ro local/asm --debug
+docker run --rm -ti --platform linux/amd64 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(pwd)":/code:ro local/asm --debug
 ```
 
 ## Documentation
