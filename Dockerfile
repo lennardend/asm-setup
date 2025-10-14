@@ -5,12 +5,14 @@ RUN apk update && apk upgrade
 # install required packages
 RUN apk add --no-cache python3 nasm make binutils gdb xxd
 
+# copy gdb config files
+COPY .gdbearlyinit /root/.gdbearlyinit
+COPY .gdbinit /root/.gdbinit
+
 # setup for make
 WORKDIR /code
 WORKDIR /compile
 
-COPY .gdbearlyinit /root/.gdbearlyinit
-COPY .gdbinit /root/.gdbinit
 COPY get_executable.py /scripts/get_executable.py
 COPY make.sh /scripts/make.sh
 RUN ["chmod", "+x", "/scripts/make.sh"]
