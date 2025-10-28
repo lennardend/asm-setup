@@ -15,8 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build docker --platform linux/amd64 --tag $DOCKER_REPO
+      run: docker build docker --platform linux/amd64 --tag ${{ vars.DOCKER_REPO }}
     - name: Login Docker hub
       run: docker login --username $DOCKER_USERNAME --password ${{ secrets.DOCKER_PAT }}
     - name: Push the Docker image
-      run: docker push $DOCKER_REPO
+      run: docker push ${{ vars.DOCKER_REPO }}
