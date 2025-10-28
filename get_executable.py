@@ -7,17 +7,17 @@ debug = False
 test = False
 exe_name = ""
 
-def run_make():
+def run_make(script_arg: str = ""):
     if debug:
-        exe_name = f"gdb --tui {exe_name}"
+        script_arg = f"gdb --tui {exe_name}"
     elif test:
-        exe_name = "make test"
-    elif not (exe_name.startswith("./") or exe_name.startswith("/")):
-        exe_name = f"./{exe_name}"
+        script_arg = "make test"
+    elif not (script_arg.startswith("./") or script_arg.startswith("/")):
+        script_arg = f"./{script_arg}"
     
-    print(f"starting make.sh with argument '{exe_name}'")
+    print(f"starting make.sh with argument '{script_arg}'")
     try:
-        subprocess.run(["/scripts/make.sh", exe_name])
+        subprocess.run(["/scripts/make.sh", script_arg])
     except KeyboardInterrupt:
         print("cancelled by user")
     except Exception as ex:
@@ -70,4 +70,4 @@ with open(makefile) as file:
     
     exe_name = groups[0]
     print(f"found {exe_name}")
-    run_make()
+    run_make(exe_name)
