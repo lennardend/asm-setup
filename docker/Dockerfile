@@ -3,7 +3,7 @@ FROM alpine:latest
 # update package manager
 RUN apk update && apk upgrade
 # install required packages
-RUN apk add --no-cache python3 nasm make binutils gdb xxd
+RUN apk add --no-cache nasm make binutils gdb xxd gcc python3
 
 # copy gdb config files
 COPY .gdbearlyinit /root/.gdbearlyinit
