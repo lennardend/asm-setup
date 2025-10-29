@@ -18,9 +18,18 @@ When the container is started, the [get_executable.py](get_executable.py) python
 
 After a executable name is found (or given), [make.sh](make.sh) is run with the executable name as an argument. This small shell script copies all files from the given read-only directory and runs the `make` command.
 
+### Flags
+
+> [!NOTE]
+> There is no `man` page and therefore no `-h` or `--help` at the moment. It will be added later.
+
 To start a [`gdb`](https://www.sourceware.org/gdb/) session, include the `--debug` flag in your `docker run` command.
 
 To go into the shell of the container, use `/bin/sh` as argument or add the `--shell` flag in your `docker run` command.
+
+To test your project easily, add a target `test` to your `Makefile`. Run this target with the `--make-test` flag in your `docker run` command.
+
+To only build your project and not run anything, add the `--build-only` flag in your `docker run` command.
 
 ### Debugger
 
