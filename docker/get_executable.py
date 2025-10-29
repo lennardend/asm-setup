@@ -5,8 +5,8 @@ import re
 
 
 def fexe(exe: str) -> str:
-    if not (len(script_arg) == 0 or script_arg.startswith("./") or script_arg.startswith("/")):
-        script_arg = f"./{script_arg}"
+    if not (len(exe) == 0 or exe.startswith("./") or exe.startswith("/")):
+        exe = f"./{exe}"
     return exe
 
 
