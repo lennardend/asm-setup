@@ -11,5 +11,8 @@ if [ $result -ne 0 ]
         exit $result
 fi
 
-echo running $1
-$1
+if [ ! -z "$1" ]
+    then
+        echo running "$1"
+        $1
+fi
