@@ -39,7 +39,8 @@ for i in range(1, len(arguments)):
         run_make("/bin/sh")
     if argument == "--make-test":
         run_make("make test")
-    
+    if argument == "--build-only":
+        run_make()
     if argument == "--debug":
         debug = True        
 
