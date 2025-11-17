@@ -10,13 +10,22 @@ def fexe(exe: str) -> str:
     return exe
 
 
-def run_make(script_arg: str = "", debug: bool = False):
+def run_make(arg: str = "", skip_make: bool = True, debug: bool = False):
     if debug:
-        script_arg = f"gdb --tui {exe_name}"        
+        arg = f"gdb --tui {exe_name}"        
     
-    print(f"starting make.sh with argument '{script_arg}'")
+    print("prepare environment")
     try:
-        subprocess.run(["/scripts/make.sh", script_arg])
+        subprocess.run("cp -a /code/* /compile", shell=True)
+        subprocess.run("cd /compile", shell=True)
+        if not skip_make:
+            print("running make")
+            subprocess.run(["make"])
+        if len(arg) > 0:
+            print(f"running '{arg}'")
+            subprocess.run([arg])
+        else:
+            print("no arg was given, not starting anything")
     except KeyboardInterrupt:
         print("cancelled by user")
     except Exception as ex:
@@ -25,8 +34,9 @@ def run_make(script_arg: str = "", debug: bool = False):
     exit(0)
 
 
-debug = False
 exe_name = ""
+debug = False
+skip_make = False
 
 arguments = sys.argv
 for i in range(1, len(arguments)):
@@ -35,14 +45,17 @@ for i in range(1, len(arguments)):
         exe_name = argument
         break
 
-    if argument == "--shell":
-        run_make("/bin/sh")
-    if argument == "--make-test":
-        run_make("make test")
-    if argument == "--build-only":
-        run_make()
-    if argument == "--debug":
-        debug = True        
+    match argument:
+        case "--shell":
+            run_make("bash")
+        case "--make-test":
+            run_make("make test")
+        case "--build-only":
+            run_make()
+        case "--debug":
+            debug = True        
+        case "--skip-make":
+            skip_make = True
 
 if exe_name != "":
     run_make(fexe(exe_name), debug)
@@ -68,12 +81,16 @@ if makefile == "":
 print(f"found {makefile}, trying to get name of generated executable")
 with open(makefile) as file:
     content = file.read()
-    groups = re.findall(r"ld -o (\w+) \w+\.o", content)
+    matches = re.findall(r"(ld -o (\w+) \w+\.o)|(gcc .*-o (\w+))", content)
 
-    if groups is None or len(groups) == 0:
+    if matches is None or len(matches) > 1:
         print("couldn't find executable name in makefile")
         exit(1)
     
-    exe_name = groups[0]
+    groups = matches[0]
+    if len(groups[1]) > 0:
+        exe_name = groups[1]
+    if len(groups[3]) > 0:
+        exe_name = groups[3]
     print(f"found {exe_name}")
-    run_make(fexe(exe_name), debug)
+    run_make(fexe(exe_name), skip_make, debug)

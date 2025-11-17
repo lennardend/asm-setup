@@ -31,6 +31,8 @@ To test your project easily, add a target `test` to your `Makefile`. Run this ta
 
 To only build your project and not run anything, add the `--build-only` flag in your `docker run` command.
 
+To skip the make command, ad the `--skip-make` flag in your `docker run` command.
+
 ### Debugger
 
 If you want to use the debugger, make sure to use [colima](https://github.com/abiosoft/colima) as your container runtime. Colima runs Docker inside a emulated linux VM. The Docker ARM runtime corrently has an issue where they cannot correctly access the memory, which means `gdb` cannot access the register values (see this [GitHub issue](https://github.com/docker/for-mac/issues/6921)).
