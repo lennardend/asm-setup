@@ -14,7 +14,5 @@ WORKDIR /code
 WORKDIR /compile
 
 COPY get_executable.py /scripts/get_executable.py
-COPY make.sh /scripts/make.sh
-RUN ["chmod", "+x", "/scripts/make.sh"]
 
 ENTRYPOINT ["python3", "/scripts/get_executable.py"]
