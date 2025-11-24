@@ -10,7 +10,7 @@ def fexe(exe: str) -> str:
     return exe
 
 
-def run_make(arg: str = "", skip_make: bool = True, debug: bool = False):
+def run_make(arg: str = "", skip_make: bool = False, debug: bool = False):
     if debug:
         arg = f"gdb --tui {exe_name}"        
     
